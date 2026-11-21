@@ -1,0 +1,14 @@
+[
+  { "id": "pates",   "emoji": "🍝", "nom": "Pâtes",           "plat": "Pâtes",                        "garniture": "aux pâtes",                 "gout": 2,  "priorite": 9 },
+  { "id": "riz",     "emoji": "🍚", "nom": "Riz",             "plat": "Riz",                          "garniture": "sur lit de riz",            "gout": 2,  "priorite": 8 },
+  { "id": "oeuf",    "emoji": "🥚", "nom": "Œuf douteux",     "plat": "Omelette",                     "garniture": "à l'œuf suspect",           "gout": 1,  "priorite": 7 },
+  { "id": "pizza",   "emoji": "🍕", "nom": "Reste de pizza",  "plat": "Pizza réchauffée",             "garniture": "et ses restes de pizza",    "gout": 2,  "priorite": 7 },
+  { "id": "thon",    "emoji": "🐟", "nom": "Thon en boîte",   "plat": "Thon",                         "garniture": "au thon",                   "gout": 1,  "priorite": 6 },
+  { "id": "couac",   "emoji": "🌾", "nom": "Couac",           "plat": "Couac",                        "garniture": "croustillant au couac",     "gout": 2,  "priorite": 6 },
+  { "id": "nutella", "emoji": "🍫", "nom": "Pâte à tartiner", "plat": "Cuillère de pâte à tartiner",  "garniture": "au chocolat (pourquoi ?)",  "gout": 1,  "priorite": 5 },
+  { "id": "fromage", "emoji": "🧀", "nom": "Fromage râpé",    "plat": "Fromage fondu",                "garniture": "gratiné",                   "gout": 2,  "priorite": 4 },
+  { "id": "piment",  "emoji": "🌶️", "nom": "Piment",          "plat": "Piment cru",                   "garniture": "qui arrache",               "gout": 1,  "priorite": 3 },
+  { "id": "ketchup", "emoji": "🍅", "nom": "Ketchup",         "plat": "Soupe de ketchup",             "garniture": "sauce ketchup",             "gout": 0,  "priorite": 2 },
+  { "id": "mayo",    "emoji": "🥫", "nom": "Mayo",            "plat": "Mayonnaise nature",            "garniture": "nappé de mayo",             "gout": 0,  "priorite": 2 },
+  { "id": "biere",   "emoji": "🍺", "nom": "Bière tiède",     "plat": "Bière tiède",                  "garniture": "flambé à la bière",         "gout": -1, "priorite": 1 }
+]

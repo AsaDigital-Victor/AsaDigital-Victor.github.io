@@ -1,0 +1,179 @@
+
+
+/* ----- 1. Les couleurs dans des variables -----*/
+
+:root {
+  --fond: #f4efe6;        /* beige clair, comme une cuisine */
+  --texte: #2b2b2b;
+  --frigo: #e9f1f5;       /* bleu très clair */
+  --frigo-bord: #b9c9d3;  /* gris-bleu */
+  --accent: #e8572a;      /* orange « feu de cuisson » */
+  --gris: #7a7a7a;
+}
+
+/* La taille d'un élément inclut sa bordure et son padding (plus simple à calculer) */
+* { box-sizing: border-box; }
+
+/* ----- 2. La page ----- */
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: system-ui, Ubuntu, sans-serif;
+  text-align: center;
+}
+
+h1 { margin-bottom: 0; }
+
+/* ----- 3. La mise en page : frigo à gauche, casserole à droite -----*/
+.cuisine {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 860px;   /* pas trop large sur un grand écran */
+  margin: 24px auto;  /* auto à gauche et à droite = centré */
+  align-items: start;
+}
+
+/* ----- 4. Le frigo ----- */
+#frigo {
+  background: var(--frigo);
+  border: 4px solid var(--frigo-bord);
+  border-radius: 18px;
+  min-height: 350px;
+  padding: 16px;
+}
+
+/* Les étagères : une grille de 2 colonnes pour ranger les ingrédients */
+#etageres {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Un ingrédient du frigo (les boutons seront créés par le JavaScript
+   avec la classe "ingredient") */
+.ingredient {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 10px 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s; /* effet fluide au survol */
+}
+.ingredient:hover {
+  transform: translateY(-3px);   /* il se soulève un peu */
+  border-color: var(--accent);
+}
+
+/* ----- 5. La casserole ----- */
+.poele {
+  font-size: 8rem;   /* emoji géant */
+  line-height: 1;
+}
+
+/* Les ingrédients déjà dans la casserole s'affichent au-dessus de la poêle */
+#contenu-casserole {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 60px;  /* garde la place même quand c'est vide */
+  font-size: 2.5rem;
+}
+
+#message {
+  color: var(--gris);
+  min-height: 3em;
+}
+
+/* ----- 6. Les boutons ----- */
+#btn-cuisiner, #btn-vider {
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin: 4px;
+  cursor: pointer;
+}
+#btn-cuisiner {
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+#btn-vider {
+  background: white;
+  border: 2px solid #ddd;
+}
+/* Effet « on appuie » */
+button:active { transform: scale(0.95); }
+/* Bouton désactivé (quand la casserole est vide par exemple) */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dans-casserole {
+  background: none;
+  border: none;
+  font-size: 2.6rem;
+  cursor: pointer;
+  animation: tombe 0.45s ease;
+}
+@keyframes tombe {
+  from { transform: translateY(-80px) rotate(-25deg); opacity: 0; }
+  to   { transform: translateY(0) rotate(0); opacity: 1; }
+  
+}
+
+/* À coller tout à la fin de style/style.css */
+
+/* Cacher un élément (le JS ajoute / enlève cette classe) */
+.cache { display: none; }
+
+/* La poêle bout pendant la cuisson (classe ajoutée par le JS) */
+.cuisson .poele { animation: bout 0.25s infinite; }
+@keyframes bout {
+  50% { transform: translateY(-4px) rotate(4deg); }
+}
+
+/* La carte du plat */
+.resultat {
+  max-width: 560px;
+  margin: 0 auto 24px;
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  animation: apparait 0.5s cubic-bezier(.2, 1.6, .4, 1); /* petit rebond */
+}
+@keyframes apparait {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.emojis { font-size: 2.5rem; margin: 0; }
+.note { font-size: 1.3rem; }
+.commentaire { font-style: italic; color: var(--gris); }
+
+#btn-rejouer {
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+/* ----- 7. Sur téléphone : le frigo au-dessus, la casserole en dessous -----
+   Ces règles ne s'appliquent que si l'écran fait moins de 640 px de large. */
+@media (max-width: 640px) {
+  .cuisine { grid-template-columns: 1fr; }
+  .poele { font-size: 6rem; }
+}
+
+
