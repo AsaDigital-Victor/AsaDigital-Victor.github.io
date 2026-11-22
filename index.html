@@ -2,7 +2,6 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mon Frigo</title>
         <link rel="stylesheet" href="style/style.css">
@@ -11,16 +10,23 @@
         <h1>Le frigo de fin de mois !</h1>
         <p>Bienvenue dans votre frigo d'étudiant en galère</p>
 
-        
         <div class="cuisine">
 
-            <section id="frigo">   
+            <section id="frigo">
+                <!-- NOUVEAU : la porte du frigo, qui s'ouvre en 3D au premier clic -->
+                <button id="porte" class="porte">
+                    <span class="poignee"></span>
+                    <span class="porte-texte">🧊 Ouvrir le frigo</span>
+                    <span class="porte-sous-texte">(à tes risques et périls)</span>
+                </button>
+                <!-- NOUVEAU : la lumière du frigo -->
+                <div class="lumiere"></div>
+                <p class="consigne">Clique sur un ingrédient pour le mettre dans la poêle</p>
                 <div id="etageres"></div>
             </section>
 
             <section id="casserole">
                 <div id="contenu-casserole"></div>
-                
                 <div class="poele">🍳</div>
                 <p id="message">La casserole est vide. Comme ton compte en banque.</p>
                 <button id="btn-cuisiner">🔥 Cuisiner</button>
@@ -29,7 +35,6 @@
 
         </div>
 
-       
         <section id="resultat" class="resultat cache">
             <p id="badge-nouveau" class="badge cache">🆕 Nouvelle recette découverte !</p>
             <p id="resultat-emojis" class="emojis"></p>
@@ -39,11 +44,13 @@
             <button id="btn-rejouer">🧊 Rouvrir le frigo</button>
         </section>
 
-         <footer>
+        <footer>
             <button id="btn-carnet">📖 Carnet de recettes : <span id="compteur">0</span> / <span id="total">793</span></button>
             <ul id="carnet" class="carnet cache"></ul>
         </footer>
 
+        <!-- NOUVEAU : effets.js (porte, fumée, voix, image) est chargé AVANT app.js qui l'utilise -->
+        <script src="js/effets.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>

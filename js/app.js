@@ -1,5 +1,6 @@
 /* =========================================================
-   Le Frigo de fin de mois ->> js/app.js  (version 6)
+   Le Frigo de fin de mois — js/app.js  (version 7 « waouh »)
+   Les effets visuels et sonores sont dans js/effets.js
    ========================================================= */
  
 // ----- 1. L'état du jeu -----
@@ -90,10 +91,11 @@ document.getElementById("btn-cuisiner").addEventListener("click", () => {
   zone.classList.add("cuisson");                 // animation CSS « ça bout »
   document.getElementById("btn-cuisiner").disabled = true;
   document.getElementById("message").textContent = "Ça mijote… (ou ça brûle)";
- 
+
   setTimeout(() => {
     zone.classList.remove("cuisson");
     cuisiner();
+    document.getElementById("message").textContent = "Bon appétit… ou pas.";
   }, 1500);
 });
  
@@ -156,6 +158,7 @@ function afficherResultat(plat, nouveau) {
   document.getElementById("resultat").classList.remove("cache");  // on montre la carte
   document.getElementById("resultat").scrollIntoView({ behavior: "smooth" });
 }
+
  
 // Bouton « Rouvrir le frigo » : on remet tout à zéro
 document.getElementById("btn-rejouer").addEventListener("click", () => {
@@ -167,7 +170,8 @@ document.getElementById("btn-rejouer").addEventListener("click", () => {
 });
  
 // ----- 6. ÉTAPE 6 : LE CARNET DE RECETTES (localStorage) -----
-
+// localStorage = une petite mémoire du navigateur qui reste même quand on ferme la page.
+// On y range un objet { "ketchup+pates": { nom, note, emojis }, ... } transformé en texte (JSON).
 const CLE_CARNET = "frigo_carnet";
  
 // Nombre total de combinaisons possibles : 1, 2, 3 ou 4 ingrédients parmi 12 = 793
@@ -209,7 +213,7 @@ function afficherCarnet() {
   cles.forEach(cle => {
     const r = carnet[cle];
     const li = document.createElement("li");
-    li.textContent = r.emojis + "  " + r.nom + " -> " + r.note + "/10";
+    li.textContent = r.emojis + "  " + r.nom + " — " + r.note + "/10";
     liste.appendChild(li);
   });
 }

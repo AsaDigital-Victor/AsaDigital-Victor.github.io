@@ -201,6 +201,71 @@ footer { max-width: 560px; margin: 0 auto 32px; }
   margin: 6px 0;
 }
 
+
+/* =========================================================
+   VERSION 7 « waouh »
+   ========================================================= */
+
+/* ----- La porte du frigo en 3D ----- */
+#frigo {
+  position: relative;      /* la porte et la lumière se placent par rapport au frigo */
+  perspective: 1000px;     /* donne de la profondeur à la rotation 3D */
+}
+.porte {
+  position: absolute;
+  inset: -4px;             /* recouvre tout le frigo, bordure comprise */
+  z-index: 3;
+  border: 4px solid var(--frigo-bord);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8fbfd 0%, #dce7ed 100%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  transform-origin: left center;   /* la porte pivote sur son bord gauche, comme une vraie */
+  transition: transform 0.9s cubic-bezier(.3, .1, .3, 1), opacity 0.9s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.porte:hover { transform: rotateY(-8deg); }      /* elle s'entrouvre au survol */
+.porte-texte { font-size: 1.4rem; font-weight: bold; color: #4a5a68; }
+.porte-sous-texte { font-size: 0.85rem; color: var(--gris); }
+.poignee {
+  position: absolute;
+  right: 18px;
+  top: 35%;
+  width: 10px;
+  height: 90px;
+  border-radius: 6px;
+  background: #9aaab5;
+}
+#frigo.ouvert .porte {
+  transform: rotateY(-110deg);   /* grande ouverture en 3D */
+  opacity: 0;
+  pointer-events: none;          /* on peut cliquer à travers une fois ouverte */
+}
+
+/* La lumière qui s'allume quand on ouvre */
+.lumiere {
+  position: absolute;
+  top: 0; left: 15%; right: 15%;
+  height: 120px;
+  background: radial-gradient(ellipse at top, rgba(255, 250, 200, 0.9), transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+#frigo.ouvert .lumiere { animation: allumage 1.2s ease forwards; }
+@keyframes allumage {
+  0%, 30% { opacity: 0; }
+  40% { opacity: 1; }
+  50% { opacity: 0.3; }     /* petit grésillement de vieille ampoule */
+  60%, 100% { opacity: 0.8; }
+}
+.consigne { color: var(--gris); font-size: 0.85rem; margin: 0 0 12px; position: relative; }
+#etageres { position: relative; }
+
 /* ----- 7. Sur téléphone : le frigo au-dessus, la casserole en dessous -----
    Ces règles ne s'appliquent que si l'écran fait moins de 640 px de large. */
 @media (max-width: 640px) {
