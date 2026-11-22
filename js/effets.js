@@ -116,3 +116,71 @@ document.getElementById("btn-son").addEventListener("click", () => {
 afficherBoutonSon();
 
 
+/* ---------- 4. TÉLÉCHARGER LA CARTE DU PLAT EN IMAGE (canvas → PNG) ----------
+   On dessine une « carte » dans un canvas invisible, puis toDataURL()
+   la transforme en image PNG, qu'on télécharge avec un lien <a download>. */
+
+// Coupe un long texte en plusieurs lignes qui tiennent dans la largeur max
+function decouperEnLignes(ctx, texte, largeurMax) {
+  const mots = texte.split(" ");
+  const lignes = [];
+  let ligne = "";
+  mots.forEach(mot => {
+    const essai = ligne ? ligne + " " + mot : mot;
+    if (ctx.measureText(essai).width > largeurMax && ligne) {
+      lignes.push(ligne);
+      ligne = mot;
+    } else {
+      ligne = essai;
+    }
+  });
+  lignes.push(ligne);
+  return lignes;
+}
+
+function telechargerCarte(plat, emojis) {
+  const c = document.createElement("canvas");
+  c.width = 800;
+  c.height = 1000;
+  const g = c.getContext("2d");
+
+  // Fond beige + carte blanche
+  g.fillStyle = "#f4efe6";
+  g.fillRect(0, 0, c.width, c.height);
+  g.fillStyle = "white";
+  g.beginPath();
+  if (g.roundRect) g.roundRect(60, 60, 680, 880, 40);   // coins arrondis (navigateurs récents)
+  else g.rect(60, 60, 680, 880);                        // sinon, rectangle simple
+  g.fill();
+
+  g.textAlign = "center";
+  g.fillStyle = "#e8572a";
+  g.font = "bold 36px system-ui, sans-serif";
+  g.fillText("Le frigo de fin de mois", 400, 150);
+
+  g.font = "110px system-ui, sans-serif";
+  g.fillText(emojis, 400, 310);
+
+  g.fillStyle = "#2b2b2b";
+  g.font = "bold 46px system-ui, sans-serif";
+  let y = 430;
+  decouperEnLignes(g, plat.nom, 580).forEach(l => { g.fillText(l, 400, y); y += 58; });
+
+  y += 30;
+  g.font = "52px system-ui, sans-serif";
+  g.fillText("⭐".repeat(Math.round(plat.note / 2)) + "  " + plat.note + "/10", 400, y);
+
+  y += 80;
+  g.fillStyle = "#7a7a7a";
+  g.font = "italic 32px system-ui, sans-serif";
+  decouperEnLignes(g, plat.commentaire, 580).forEach(l => { g.fillText(l, 400, y); y += 44; });
+
+  g.font = "26px system-ui, sans-serif";
+  g.fillText("asadigital-victor.github.io", 400, 900);
+
+  // Transformation en image + téléchargement
+  const lien = document.createElement("a");
+  lien.href = c.toDataURL("image/png");
+  lien.download = "mon-plat-de-fin-de-mois.png";
+  lien.click();
+}

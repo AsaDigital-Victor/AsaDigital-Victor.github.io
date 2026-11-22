@@ -189,11 +189,13 @@ function afficherResultat(plat, nouveau) {
   annoncerPlat(plat);
 }
 
-// VERSION 7 : bouton de la carte du plat
+// VERSION 7 : boutons de la carte du plat
 document.getElementById("btn-ecouter").addEventListener("click", () => {
   if (platActuel) annoncerPlat(platActuel);
 });
-
+document.getElementById("btn-photo").addEventListener("click", () => {
+  if (platActuel) telechargerCarte(platActuel, casserole.map(i => i.emoji).join(" "));
+});
  
 // Bouton « Rouvrir le frigo » : on remet tout à zéro
 document.getElementById("btn-rejouer").addEventListener("click", () => {
