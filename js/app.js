@@ -1,5 +1,5 @@
 /* =========================================================
-   Le Frigo de fin de mois — js/app.js  (version 6)
+   Le Frigo de fin de mois ->> js/app.js  (version 6)
    ========================================================= */
  
 // ----- 1. L'état du jeu -----
@@ -210,7 +210,7 @@ function afficherCarnet() {
   cles.forEach(cle => {
     const r = carnet[cle];
     const li = document.createElement("li");
-    li.textContent = r.emojis + "  " + r.nom + " — " + r.note + "/10";
+    li.textContent = r.emojis + "  " + r.nom + " -> " + r.note + "/10";
     liste.appendChild(li);
   });
 }
