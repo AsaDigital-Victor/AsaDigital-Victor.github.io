@@ -115,12 +115,13 @@ document.getElementById("btn-cuisiner").addEventListener("click", () => {
   zone.classList.add("cuisson");                 // animation CSS « ça bout »
   document.getElementById("btn-cuisiner").disabled = true;
   document.getElementById("message").textContent = "Ça mijote… (ou ça brûle)";
+  lancerFumee(1800);                              // VERSION 7 : fumée et flammes (effets.js)
 
   setTimeout(() => {
     zone.classList.remove("cuisson");
     cuisiner();
     document.getElementById("message").textContent = "Bon appétit… ou pas.";
-  }, 1500);
+  }, 1800);
 });
  
 function cuisiner() {

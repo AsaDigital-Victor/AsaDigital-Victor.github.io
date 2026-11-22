@@ -27,7 +27,11 @@
 
             <section id="casserole">
                 <div id="contenu-casserole"></div>
-                <div class="poele">🍳</div>
+                <div class="zone-poele">
+                    <div class="poele">🍳</div>
+                    <!-- NOUVEAU : un canvas par-dessus la poêle pour dessiner la fumée et les flammes -->
+                    <canvas id="fumee" width="300" height="300"></canvas>
+                </div>
                 <p id="message">La casserole est vide. Comme ton compte en banque.</p>
                 <button id="btn-cuisiner">🔥 Cuisiner</button>
                 <button id="btn-vider">↩️ Tout remettre</button>
