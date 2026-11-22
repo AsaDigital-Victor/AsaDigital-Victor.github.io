@@ -266,6 +266,15 @@ footer { max-width: 560px; margin: 0 auto 32px; }
 .consigne { color: var(--gris); font-size: 0.85rem; margin: 0 0 12px; position: relative; }
 #etageres { position: relative; }
 
+/* ----- Glisser-déposer ----- */
+.ingredient { cursor: grab; }
+.ingredient.attrape { opacity: 0.4; transform: scale(0.95); }
+#casserole { border-radius: 18px; transition: background 0.2s, box-shadow 0.2s; padding: 8px; }
+#casserole.survol {
+  background: rgba(232, 87, 42, 0.08);
+  box-shadow: 0 0 0 3px var(--accent) inset;
+}
+
 /* ----- 7. Sur téléphone : le frigo au-dessus, la casserole en dessous -----
    Ces règles ne s'appliquent que si l'écran fait moins de 640 px de large. */
 @media (max-width: 640px) {

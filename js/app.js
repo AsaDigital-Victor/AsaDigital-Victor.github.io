@@ -37,6 +37,15 @@ function afficher() {
     bouton.className = "ingredient";
     bouton.textContent = ing.emoji + " " + ing.nom;
     bouton.addEventListener("click", () => mettreDansCasserole(ing));
+
+    // VERSION 7 : GLISSER-DÉPOSER. draggable rend le bouton « attrapable » à la souris.
+    // Au début du glisser, on range l'id de l'ingrédient dans le « presse-papier » du glisser (dataTransfer).
+    bouton.draggable = true;
+    bouton.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", ing.id);
+      bouton.classList.add("attrape");
+    });
+    bouton.addEventListener("dragend", () => bouton.classList.remove("attrape"));
     etageres.appendChild(bouton);
   });
  
@@ -77,6 +86,21 @@ function remettreDansFrigo(ing) {
   afficher();
 }
  
+// VERSION 7 : la casserole accepte qu'on y lâche un ingrédient
+const zoneCasserole = document.getElementById("casserole");
+zoneCasserole.addEventListener("dragover", (e) => {
+  e.preventDefault();                       // obligatoire : sinon le navigateur refuse le « drop »
+  zoneCasserole.classList.add("survol");    // la poêle s'illumine
+});
+zoneCasserole.addEventListener("dragleave", () => zoneCasserole.classList.remove("survol"));
+zoneCasserole.addEventListener("drop", (e) => {
+  e.preventDefault();
+  zoneCasserole.classList.remove("survol");
+  const id = e.dataTransfer.getData("text/plain");      // on relit l'id rangé au dragstart
+  const ing = frigo.find(i => i.id === id);             // on retrouve l'ingrédient dans le frigo
+  if (ing) mettreDansCasserole(ing);
+});
+
 document.getElementById("btn-vider").addEventListener("click", () => {
   frigo = frigo.concat(casserole);
   casserole = [];
