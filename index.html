@@ -27,11 +27,7 @@
 
             <section id="casserole">
                 <div id="contenu-casserole"></div>
-                <div class="zone-poele">
-                    <div class="poele">🍳</div>
-                    <!-- NOUVEAU : un canvas par-dessus la poêle pour dessiner la fumée et les flammes -->
-                    <canvas id="fumee" width="300" height="300"></canvas>
-                </div>
+                <div class="poele">🍳</div>
                 <p id="message">La casserole est vide. Comme ton compte en banque.</p>
                 <button id="btn-cuisiner">🔥 Cuisiner</button>
                 <button id="btn-vider">↩️ Tout remettre</button>
@@ -60,8 +56,14 @@
             <ul id="carnet" class="carnet cache"></ul>
         </footer>
 
-        <!-- NOUVEAU : effets.js (porte, fumée, voix, image) est chargé AVANT app.js qui l'utilise -->
+        <!-- GRAND FINAL : deux canvas plein écran (fumée, confettis) et le grand texte du final -->
+        <canvas id="fumee"></canvas>
+        <canvas id="ecran-effets"></canvas>
+        <div id="bandeau" class="bandeau"></div>
+
+        <!-- effets.js et final.js sont chargés AVANT app.js, qui utilise leurs fonctions -->
         <script src="js/effets.js"></script>
+        <script src="js/final.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>

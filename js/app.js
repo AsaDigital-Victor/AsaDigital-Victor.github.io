@@ -1,6 +1,6 @@
 /* =========================================================
-   Le Frigo de fin de mois — js/app.js  (version 7 « waouh »)
-   Les effets visuels et sonores sont dans js/effets.js
+   Le Frigo de fin de mois — js/app.js  (version 8 « grand final »)
+   Les effets visuels et sonores sont dans js/effets.js et js/final.js
    ========================================================= */
  
 // ----- 1. L'état du jeu -----
@@ -121,6 +121,7 @@ document.getElementById("btn-cuisiner").addEventListener("click", () => {
   setTimeout(() => {
     zone.classList.remove("cuisson");
     cuisiner();
+    grandFinal(platActuel.note);                  // GRAND FINAL selon la note (final.js)
     document.getElementById("message").textContent = "Bon appétit… ou pas.";
   }, 1800);
 });
@@ -186,7 +187,7 @@ function afficherResultat(plat, nouveau) {
 
   // VERSION 7 : on garde le plat en mémoire, et le chef l'annonce à voix haute (effets.js)
   platActuel = plat;
-  annoncerPlat(plat);
+  setTimeout(() => annoncerPlat(plat), 2200);   // le chef parle APRÈS le grand final
 }
 
 // VERSION 7 : boutons de la carte du plat
