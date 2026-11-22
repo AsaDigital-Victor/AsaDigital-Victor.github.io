@@ -167,8 +167,7 @@ document.getElementById("btn-rejouer").addEventListener("click", () => {
 });
  
 // ----- 6. ÉTAPE 6 : LE CARNET DE RECETTES (localStorage) -----
-// localStorage = une petite mémoire du navigateur qui reste même quand on ferme la page.
-// On y range un objet { "ketchup+pates": { nom, note, emojis }, ... } transformé en texte (JSON).
+
 const CLE_CARNET = "frigo_carnet";
  
 // Nombre total de combinaisons possibles : 1, 2, 3 ou 4 ingrédients parmi 12 = 793
