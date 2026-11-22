@@ -74,3 +74,45 @@ function lancerFumee(duree) {
 }
 
 
+/* ---------- 3. LA VOIX DU CHEF (Web Speech API) ----------
+   speechSynthesis est intégré au navigateur : il lit un texte à voix haute.
+   On mémorise dans le localStorage si le joueur a coupé le son. */
+const CLE_SON = "frigo_son";
+let sonActive = true;
+try { sonActive = localStorage.getItem(CLE_SON) !== "off"; } catch (e) {}
+
+const INTROS = [
+  "Mesdames et messieurs, le chef vous présente :",
+  "Ce soir, au menu :",
+  "Attention, chef-d'œuvre en approche :",
+  "Le chef a encore frappé :",
+];
+
+function parler(texte) {
+  if (!sonActive || !("speechSynthesis" in window)) return;   // son coupé ou navigateur incompatible
+  speechSynthesis.cancel();                                   // coupe une phrase en cours
+  const phrase = new SpeechSynthesisUtterance(texte);
+  phrase.lang = "fr-FR";
+  phrase.rate = 0.95;    // un peu lent, pour le côté solennel
+  phrase.pitch = 0.8;    // voix un peu grave
+  speechSynthesis.speak(phrase);
+}
+
+function annoncerPlat(plat) {
+  const intro = INTROS[Math.floor(Math.random() * INTROS.length)];
+  parler(intro + " " + plat.nom + ". Note : " + plat.note + " sur 10. " + plat.commentaire);
+}
+
+function afficherBoutonSon() {
+  document.getElementById("btn-son").textContent = sonActive ? "🔊 Chef : on" : "🔇 Chef : off";
+}
+
+document.getElementById("btn-son").addEventListener("click", () => {
+  sonActive = !sonActive;
+  try { localStorage.setItem(CLE_SON, sonActive ? "on" : "off"); } catch (e) {}
+  if (!sonActive && "speechSynthesis" in window) speechSynthesis.cancel();
+  afficherBoutonSon();
+});
+afficherBoutonSon();
+
+

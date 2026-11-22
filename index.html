@@ -45,11 +45,17 @@
             <h2 id="resultat-nom"></h2>
             <p id="resultat-note" class="note"></p>
             <p id="resultat-commentaire" class="commentaire"></p>
+            <!-- NOUVEAU : réécouter le chef + télécharger la carte en image -->
+            <div class="actions-resultat">
+                <button id="btn-ecouter" class="btn-secondaire">🗣️ Réécouter le chef</button>
+            </div>
             <button id="btn-rejouer">🧊 Rouvrir le frigo</button>
         </section>
 
         <footer>
             <button id="btn-carnet">📖 Carnet de recettes : <span id="compteur">0</span> / <span id="total">793</span></button>
+            <!-- NOUVEAU : activer / couper la voix du chef -->
+            <button id="btn-son">🔊 Chef : on</button>
             <ul id="carnet" class="carnet cache"></ul>
         </footer>
 

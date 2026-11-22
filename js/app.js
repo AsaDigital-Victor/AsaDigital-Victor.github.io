@@ -8,6 +8,7 @@ let INGREDIENTS = [];   // tous les ingrédients (lus dans le JSON)
 let RECETTES = {};      // NOUVEAU : les recettes spéciales (lues dans le JSON)
 let frigo = [];         // ceux qui sont encore dans le frigo
 let casserole = [];     // ceux qu'on a choisis (4 max)
+let platActuel = null;  // VERSION 7 : le dernier plat cuisiné (pour la voix et l'image)
  
 // NOUVEAU : les suffixes ajoutés à la fin des noms générés, selon la note
 const SUFFIXES_BONS    = ["façon chef étoilé", "du dimanche soir", "à la mode de Cayenne", "comme chez mamie (presque)"];
@@ -182,7 +183,16 @@ function afficherResultat(plat, nouveau) {
  
   document.getElementById("resultat").classList.remove("cache");  // on montre la carte
   document.getElementById("resultat").scrollIntoView({ behavior: "smooth" });
+
+  // VERSION 7 : on garde le plat en mémoire, et le chef l'annonce à voix haute (effets.js)
+  platActuel = plat;
+  annoncerPlat(plat);
 }
+
+// VERSION 7 : bouton de la carte du plat
+document.getElementById("btn-ecouter").addEventListener("click", () => {
+  if (platActuel) annoncerPlat(platActuel);
+});
 
  
 // Bouton « Rouvrir le frigo » : on remet tout à zéro
