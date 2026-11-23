@@ -127,6 +127,7 @@ function grandFinal(note) {
     afficherBandeau("🚨 DÉTECTEUR DE FUMÉE DÉCLENCHÉ 🚨", "rouge");
     jouerSon("nul", sirene);       // son meme, ou sirène si le fichier manque
     setTimeout(() => document.body.classList.remove("alarme"), 2200);
+    setTimeout(effondrement, 1000);                 // puis la page s'écroule (section 5)
   } else if (note < 7) {
     afficherBandeau("😐 Mouais…", "gris");
     jouerSon("bof", tromboneTriste);
@@ -135,4 +136,61 @@ function grandFinal(note) {
     lancerConfettis();
     jouerSon("top", fanfare);
   }
+}
+
+
+/* ---------- 5. L'EFFONDREMENT : la page tombe en morceaux, puis se reconstruit ----------
+   Pour un plat raté, chaque élément visible de la page (titres, boutons,
+   carte du plat…) tombe comme un objet réel : gravité, rotation, rebond sur le
+   bas de l'écran. Puis, comme si on rembobinait, tout revient à sa place.
+   Le principe : on ne déplace pas vraiment les éléments, on leur applique
+   un « transform: translate(...) rotate(...) » recalculé à chaque image. */
+function effondrement() {
+  const selecteur = "h1, body > p, .ingredient, #contenu-casserole span, .poele, #message, " +
+                    "#casserole button, #resultat > *, .actions-resultat button, footer > button";
+  const morceaux = [];
+
+  document.querySelectorAll(selecteur).forEach(el => {
+    if (el.offsetParent === null) return;                 // élément caché : on l'ignore
+    const rect = el.getBoundingClientRect();
+    morceaux.push({
+      el: el,
+      x: 0, y: 0,                                         // décalage par rapport à sa place
+      vx: (Math.random() - 0.5) * 12,                     // petite poussée sur le côté
+      vy: -Math.random() * 10,                            // petit saut vers le haut
+      angle: 0,
+      vAngle: (Math.random() - 0.5) * 12,                 // vitesse de rotation (degrés)
+      sol: window.innerHeight - rect.bottom,              // distance jusqu'au bas de l'écran
+    });
+  });
+
+  let enCours = true;
+  function image() {
+    if (!enCours) return;              // la reconstruction a commencé : on ne bouge plus rien
+    morceaux.forEach(m => {
+      m.vy += 0.9;                     // gravité
+      m.x += m.vx;
+      m.y += m.vy;
+      m.angle += m.vAngle;
+      if (m.y > m.sol) {               // il touche le sol : il rebondit en perdant de l'énergie
+        m.y = m.sol;
+        m.vy *= -0.45;
+        m.vx *= 0.8;
+        m.vAngle *= 0.6;
+      }
+      m.el.style.transform = `translate(${m.x}px, ${m.y}px) rotate(${m.angle}deg)`;
+    });
+    requestAnimationFrame(image);
+  }
+  requestAnimationFrame(image);
+
+  // Après 2,8 s : on arrête la chute et chaque morceau revole à sa place
+  setTimeout(() => {
+    enCours = false;
+    morceaux.forEach((m, i) => {
+      m.el.style.transition = `transform 0.9s cubic-bezier(.2,1.4,.4,1) ${i * 0.02}s`;  // petit décalage = effet vague
+      m.el.style.transform = "";
+    });
+    setTimeout(() => morceaux.forEach(m => m.el.style.transition = ""), 2000);
+  }, 2800);
 }

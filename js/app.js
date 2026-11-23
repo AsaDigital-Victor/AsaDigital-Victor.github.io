@@ -1,5 +1,5 @@
 /* =========================================================
-   Le Frigo de fin de mois — js/app.js  (version 9 « sons meme »)
+   Le Frigo de fin de mois — js/app.js  (version 10 « effondrement »)
    Les effets visuels et sonores sont dans js/effets.js et js/final.js
    ========================================================= */
  
