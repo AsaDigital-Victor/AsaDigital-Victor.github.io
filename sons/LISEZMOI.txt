@@ -1,0 +1,7 @@
+Mets ici 9 fichiers mp3 (3 par cas), avec EXACTEMENT ces noms :
+  nul1.mp3 nul2.mp3 nul3.mp3  -> plat raté (note < 4)     ex : "oh no no no", "bruh", "emotional damage", sirène
+  bof1.mp3 bof2.mp3 bof3.mp3  -> plat moyen (note 4 à 6)  ex : sad trombone, "hmm", "this is fine"
+  top1.mp3 top2.mp3 top3.mp3  -> bon plat (note >= 7)     ex : "wow", "let's go", "sheesh", applaudissements
+À chaque plat, le site en tire un au hasard parmi les 3.
+Sons courts (2-4 secondes), trouvables sur myinstants.com (bouton Download MP3).
+Si un fichier manque, le site joue le son fabriqué par le navigateur.

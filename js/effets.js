@@ -84,43 +84,44 @@ function lancerFumee(duree) {
 }
 
 
-/* ---------- 3. LA VOIX DU CHEF (Web Speech API) ----------
-   speechSynthesis est intégré au navigateur : il lit un texte à voix haute.
+/* ---------- 3. LES SONS « MEME » (fichiers mp3 + objet Audio) ----------
+   On remplace la voix de synthèse (qui ne marche pas sur tous les ordis)
+   par de vrais fichiers son, rangés dans le dossier sons/.
+   new Audio("fichier.mp3") crée un lecteur, .play() le lance.
    On mémorise dans le localStorage si le joueur a coupé le son. */
 const CLE_SON = "frigo_son";
 let sonActive = true;
 try { sonActive = localStorage.getItem(CLE_SON) !== "off"; } catch (e) {}
 
-const INTROS = [
-  "Mesdames et messieurs, le chef vous présente :",
-  "Ce soir, au menu :",
-  "Attention, chef-d'œuvre en approche :",
-  "Le chef a encore frappé :",
-];
+// 3 sons par cas : on en tire un au hasard à chaque fois
+const SONS = {
+  nul: ["sons/nul1.mp3", "sons/nul2.mp3", "sons/nul3.mp3"],   // plat raté (note < 4)
+  bof: ["sons/bof1.mp3", "sons/bof2.mp3", "sons/bof3.mp3"],   // plat moyen (note 4 à 6)
+  top: ["sons/top1.mp3", "sons/top2.mp3", "sons/top3.mp3"],   // bon plat (note >= 7)
+};
 
-function parler(texte) {
-  if (!sonActive || !("speechSynthesis" in window)) return;   // son coupé ou navigateur incompatible
-  speechSynthesis.cancel();                                   // coupe une phrase en cours
-  const phrase = new SpeechSynthesisUtterance(texte);
-  phrase.lang = "fr-FR";
-  phrase.rate = 0.95;    // un peu lent, pour le côté solennel
-  phrase.pitch = 0.8;    // voix un peu grave
-  speechSynthesis.speak(phrase);
-}
+let sonEnCours = null;
 
-function annoncerPlat(plat) {
-  const intro = INTROS[Math.floor(Math.random() * INTROS.length)];
-  parler(intro + " " + plat.nom + ". Note : " + plat.note + " sur 10. " + plat.commentaire);
+// Joue un son meme. Si le fichier n'existe pas (ou ne peut pas être lu),
+// on appelle "secours" : un son fabriqué par le navigateur (voir final.js).
+function jouerSon(cle, secours) {
+  if (!sonActive) return;
+  if (sonEnCours) sonEnCours.pause();          // on coupe le son précédent
+  const liste = SONS[cle];
+  const fichier = liste[Math.floor(Math.random() * liste.length)];   // tirage au sort
+  sonEnCours = new Audio(fichier);
+  sonEnCours.volume = 0.8;
+  sonEnCours.play().catch(() => { if (secours) secours(); });
 }
 
 function afficherBoutonSon() {
-  document.getElementById("btn-son").textContent = sonActive ? "🔊 Chef : on" : "🔇 Chef : off";
+  document.getElementById("btn-son").textContent = sonActive ? "🔊 Son : on" : "🔇 Son : off";
 }
 
 document.getElementById("btn-son").addEventListener("click", () => {
   sonActive = !sonActive;
   try { localStorage.setItem(CLE_SON, sonActive ? "on" : "off"); } catch (e) {}
-  if (!sonActive && "speechSynthesis" in window) speechSynthesis.cancel();
+  if (!sonActive && sonEnCours) sonEnCours.pause();
   afficherBoutonSon();
 });
 afficherBoutonSon();

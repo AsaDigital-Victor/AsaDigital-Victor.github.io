@@ -1,5 +1,5 @@
 /* =========================================================
-   Le Frigo de fin de mois — js/app.js  (version 8 « grand final »)
+   Le Frigo de fin de mois — js/app.js  (version 9 « sons meme »)
    Les effets visuels et sonores sont dans js/effets.js et js/final.js
    ========================================================= */
  
@@ -8,7 +8,7 @@ let INGREDIENTS = [];   // tous les ingrédients (lus dans le JSON)
 let RECETTES = {};      // NOUVEAU : les recettes spéciales (lues dans le JSON)
 let frigo = [];         // ceux qui sont encore dans le frigo
 let casserole = [];     // ceux qu'on a choisis (4 max)
-let platActuel = null;  // VERSION 7 : le dernier plat cuisiné (pour la voix et l'image)
+let platActuel = null;  // VERSION 7 : le dernier plat cuisiné (pour le son et l'image)
  
 // NOUVEAU : les suffixes ajoutés à la fin des noms générés, selon la note
 const SUFFIXES_BONS    = ["façon chef étoilé", "du dimanche soir", "à la mode de Cayenne", "comme chez mamie (presque)"];
@@ -187,12 +187,11 @@ function afficherResultat(plat, nouveau) {
 
   // VERSION 7 : on garde le plat en mémoire, et le chef l'annonce à voix haute (effets.js)
   platActuel = plat;
-  setTimeout(() => annoncerPlat(plat), 2200);   // le chef parle APRÈS le grand final
 }
 
 // VERSION 7 : boutons de la carte du plat
 document.getElementById("btn-ecouter").addEventListener("click", () => {
-  if (platActuel) annoncerPlat(platActuel);
+  if (platActuel) sonDuPlat(platActuel.note);    // final.js
 });
 document.getElementById("btn-photo").addEventListener("click", () => {
   if (platActuel) telechargerCarte(platActuel, casserole.map(i => i.emoji).join(" "));

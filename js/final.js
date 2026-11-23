@@ -112,19 +112,27 @@ function lancerConfettis() {
 }
 
 
+// Rejouer le son correspondant à une note (bouton « Rejouer le son »)
+function sonDuPlat(note) {
+  if (note < 4) jouerSon("nul", sirene);
+  else if (note < 7) jouerSon("bof", tromboneTriste);
+  else jouerSon("top", fanfare);
+}
+
+
 /* ---------- 4. LE GRAND FINAL : choisit la réaction selon la note ---------- */
 function grandFinal(note) {
   if (note < 4) {
     document.body.classList.add("alarme");          // flash rouge + écran qui tremble (CSS)
     afficherBandeau("🚨 DÉTECTEUR DE FUMÉE DÉCLENCHÉ 🚨", "rouge");
-    sirene();
+    jouerSon("nul", sirene);       // son meme, ou sirène si le fichier manque
     setTimeout(() => document.body.classList.remove("alarme"), 2200);
   } else if (note < 7) {
     afficherBandeau("😐 Mouais…", "gris");
-    tromboneTriste();
+    jouerSon("bof", tromboneTriste);
   } else {
     afficherBandeau("👨‍🍳 CHEF ÉTOILÉ ! ⭐", "or");
     lancerConfettis();
-    fanfare();
+    jouerSon("top", fanfare);
   }
 }
